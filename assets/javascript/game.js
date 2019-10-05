@@ -2,7 +2,7 @@
 // Global Variables
 // ================================================================================================================================================
 // Create an array of words
-var word = [
+var words = [
 "michael myers", 
 "freddy krueger", 
 "jason voorhees", 
@@ -14,57 +14,38 @@ var word = [
 "leatherface", 
 "chucky", 
 "jack torrance"
-]
+];
 
-var rightLetter = [];
-var wrongLetter = [];
-var underScore = [];
+// Pick a random word
+var word = words[Math.floor(Math.random() * words.length)];
+console.log(word);
 
-// Choose word randomly
-    var randNum = Math.floor(Math.random() * word.length);
-    var randWord = word[randNum];
-    console.log(randWord);
-
+//DOM Manipulation
 // DOM manipulation
 var docUnderScore = document.getElementsByClassName("underscore");
-var docRightGuess = document.getElementsByClassName("rightGuess");
 var docWrongGuess = document.getElementsByClassName("wrongGuess");
+var docPrompt = document.getElementsByClassName("prompt");
+// Create answer array
+var answerArray = [];
+for ( var i = 0; i < word.length; i++) {
+    answerArray[i] = "_";
+}
+
+var remainingLetters = word.length;
+
+//Game Loop
 
 
-// ================================================================================================================================================
-// Main
-// ================================================================================================================================================
-// Create underscore based on length of word
-    var generateUnderscore = () => {
-        for ( var i = 0; i < randWord.length; i++) {
-            underScore.push("_");
-        }
-        return underScore;
+//Get guess from player
+document.addEventListener("keypress", (event) => {
+var guess = event.key.toLocaleLowerCase();
+for (var j = 0; j < word.length; j++) {
+    if (word[j] === guess) {
+        answerArray[j] = guess;
+        remainingLetters--;
     }
+  };
+  
 
-// Get user guess
-    document.addEventListener("keypress", (event) => {
-        var keyWord = String.fromCharCode(event.keyCode);
-        // if user's guess is correct    
-        if (randWord.indexOf(keyWord) > -1) {
-        // replace underscore with correct letter
-            underScore[randWord.indexOf(keyWord)] = keyWord;
-            docUnderScore[0].innerHTML = underScore.join(" ");
-            
-        // check to see if user word matches guess
-            if (underScore.join("") === randWord) {
-                alert("You Survived!");
-            }
-        }
-        // if user's guess is incorrect     
-        else {
-            wrongLetter.push(keyWord);
-            docWrongGuess[0].innerHTML = wrongLetter;
-        }
 
-    });
-
-    docUnderScore[0].innerHTML = generateUnderscore().join(" ");
-
-    
-
+docUnderScore[0].innerHTML = answerArray.join(" ");})
