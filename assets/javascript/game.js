@@ -31,6 +31,7 @@ for ( var i = 0; i < word.length; i++) {
     answerArray[i] = "_";
 }
 
+var wrongLetter = [];
 var remainingLetters = word.length;
 
 //Game Loop
@@ -38,14 +39,20 @@ var remainingLetters = word.length;
 
 //Get guess from player
 document.addEventListener("keypress", (event) => {
-var guess = event.key.toLocaleLowerCase();
+var guess = event.key.toLowerCase();
 for (var j = 0; j < word.length; j++) {
     if (word[j] === guess) {
         answerArray[j] = guess;
         remainingLetters--;
     }
   };
-  
 
+  if (answerArray.join("") === word) {
+    alert("You Survived!");
+} else {
+    wrongLetter.push(guess);
+    docWrongGuess[0].innerHTML = wrongLetter;
+};
 
-docUnderScore[0].innerHTML = answerArray.join(" ");})
+docUnderScore[0].innerHTML = answerArray.join(" ");
+})
