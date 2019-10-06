@@ -3,7 +3,7 @@
 // ================================================================================================================================================
 
 // Create an array of words
-var words = [
+let words = [
     "michael myers", 
     "freddy krueger", 
     "jason voorhees", 
@@ -16,16 +16,25 @@ var words = [
     
     
     // Pick a random word
-    var word = words[Math.floor(Math.random() * words.length)];
+    let word = words[Math.floor(Math.random() * words.length)];
     console.log(word);
     
+    const maxTries = 10;
+    let remainingGuesses = 0;
+    let gameStarted = false;
+    let hasFinished = false;
+    let wins = 0;
+    let guessedLetters = [];
+    let remainingLetters = word.length;
+    let answerArray = [];
+    
     //DOM Manipulation
-    var docUnderScore = document.getElementsByClassName("underscore");
-    var docWrongGuess = document.getElementsByClassName("wrongGuess"); 
+    let docUnderScore = document.getElementsByClassName("underscore");
+    let docGuess = document.getElementsByClassName("guess"); 
 
     // Create answer arrays
-    var answerArray = [];
-    for ( var i = 0; i < word.length; i++) {
+    
+    for ( let i = 0; i < word.length; i++) {
         if (word[i] === " ") {
             answerArray[i] = " ";
         }else {
@@ -33,8 +42,7 @@ var words = [
         }
     }
     docUnderScore[0].innerHTML = answerArray.join("&nbsp");
-    var wrongLetter = [];
-    var remainingLetters = word.length;
+
     
     // ================================================================================================================================================
     // Game
@@ -42,8 +50,8 @@ var words = [
     
     //Get guess from player
     document.addEventListener("keypress", (event) => {
-    var guess = event.key.toLowerCase();
-    for (var j = 0; j < word.length; j++) {
+    let guess = event.key.toLowerCase();
+    for (let j = 0; j < word.length; j++) {
         if (word[j] === guess) {
             answerArray[j] = guess;
             remainingLetters--;
@@ -51,11 +59,12 @@ var words = [
       };
     // If user's gues is correct
       if (answerArray.join("") === word) {
-        alert("You Survived!");
+        guessedLetters.push(guess.toUpperCase());
+        docGuess[0].innerHTML = "You've sruvived! Refresh to try again!";
     // If user's guess is incorrect
     } else {
-        wrongLetter.push(guess.toUpperCase());
-        docWrongGuess[0].innerHTML = wrongLetter;
+        guessedLetters.push(guess.toUpperCase());
+        docGuess[0].innerHTML = guessedLetters;
     };
     
     docUnderScore[0].innerHTML = answerArray.join("&nbsp");
