@@ -60,7 +60,7 @@ let words = [
     // If user's gues is correct
       if (answerArray.join("") === word) {
         guessedLetters.push(guess.toUpperCase());
-        docGuess[0].innerHTML = "You've sruvived! Refresh to try again!";
+        docGuess[0].innerHTML = "You've survived! Refresh to try again!";
     // If user's guess is incorrect
     } else {
         guessedLetters.push(guess.toUpperCase());
